@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <title>ENVIOS TUCAN</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body style="background-image: url('resources/images/ENVIOS_TUCAN_ss.png'); background-size: cover; background-repeat: no-repeat"><!--style="background-color: #4b6680"-->
+
+        <h:form id="loginForm">
+            <p:growl id="msg" showDetail="true" life="3000"/>
+
+            <p:panel header="Inicio de sesión" style="font-size: xx-large; background-color: #22303d; color: white; border-color:#22303d; width: 400px; height: 300px;  text-align: center; margin-left: 15%; margin-top: 8%; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+       rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; opacity: 0.7">
+                <h:panelGrid columns="1" cellpadding="5" style="text-align: left">
+                    <h:outputText value="Nombre usuario" style="color: white; font-size: x-large"/>
+                    <p:inputText id="user" style="width: 350px; height: 40px; margin: auto" value="#{userController.user.username}"/>
+                    <h:outputText value="Contraseña" style="color: white; font-size: x-large"/>
+                    <p:password id="password" style="width: 350px; height: 40px; margin: auto" value="#{userController.user.password}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="1" cellpadding="10" width="100%" style="text-align: center">
+                    <p:commandButton id="btnSignin" update="loginForm msg" value="Iniciar sesión" style="font-size: large; background-color: #4b6680; border-color: #4b6680" action="#{userController.login()}"/>
+                </h:panelGrid>
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</f:view>
+</html>

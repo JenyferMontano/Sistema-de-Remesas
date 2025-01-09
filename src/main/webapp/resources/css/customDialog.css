@@ -1,0 +1,13 @@
+.ui-dialog.custom-dialog .ui-dialog-titlebar {
+    background-color: var(--verde) !important;
+    color: white !important;
+}
+
+.ui-dialog.custom-dialog .ui-dialog-content {
+    background-color: var(--azul_oscuro) !important;
+}
+
+.ui-dialog.custom-dialog .ui-dialog-footer {
+    background-color: var(--verde) !important;
+}
+
