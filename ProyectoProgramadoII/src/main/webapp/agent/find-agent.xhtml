@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <title>Proyecto de Remesas - Envíos Tucán </title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+    </h:head>
+    <h:body style="background-color: var(--gris_claro);" >
+        <div id="wrapper" style="width: 90%;margin: 0 auto;">
+            <div id="headerPage" >
+                <div> <!--Encabezado-->
+                    <p:panelGrid id="header" style="width: 100%;">
+                        <p:row>
+                            <p:column style="width: 70%;margin: 0px auto;border: none;">
+                                <h:graphicImage library="images" name="Logo.png" style="width: 200px;display: block; margin-left:0px;"/>
+                            </p:column>
+                            <p:column style="width: 30%;border: none; text-align: right; margin-top: auto" >
+                                <h1 style="display: block;margin-right: 30px; color: var(--verde);" >Envíos Tucán</h1>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </div>
+                <!-- Menú de navegación -->
+                <!-- Menú de navegación -->
+                <div id="navigationMenu">
+                    <h:form>
+                        <p:menubar style="background: var(--verde); border: var(--gris)">
+                            <p:menuitem value="Inicio" action="/home?faces-redirect=true"/>
+                            <!-- Módulo de Administración -->
+                            <p:submenu label="Usuarios" icon="pi pi-fw pi-user" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Agregar" icon="pi pi-fw pi-user-plus" action="/users/add-user?faces-redirect=true"/>
+                                <p:menuitem value="Listar" icon="pi pi-fw pi-users" action="/users/list-users?faces-redirect=true"/>
+                            </p:submenu>
+
+
+                            <!-- Módulo de Administración -->
+                            <p:submenu label="Vehiculo" icon="pi pi-fw pi-truck" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Agregar" icon="pi pi-fw pi-plus" action="/vehicles/add-vehicle?faces-redirect=true"/>
+                                <p:menuitem value="Listar" icon="pi pi-fw pi-list-check " action="/vehicles/list-vehicles?faces-redirect=true"/>
+                                <p:menuitem value="Buscar" icon="pi pi-fw pi-search" action="/vehicles/find-vehicle?faces-redirect=true"/>
+                            </p:submenu>
+
+                            <!-- Módulo de Administración -->
+                            <p:submenu label="Agentes" icon="pi pi-fw pi-id-card" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Agregar" icon="pi pi-fw pi-user-plus" action="/agent/add-agent?faces-redirect=true"/>
+                                <p:menuitem value="Listar" icon="pi pi-fw pi-users" action="/agent/list-agents?faces-redirect=true"/>
+                                <p:menuitem value="Buscar" icon="pi pi-fw pi-search" action="/agent/find-agent?faces-redirect=true"/>
+                            </p:submenu>
+
+                            <!-- Módulo de Solicitudes (solo clientes) -->
+                            <p:submenu label="Solicitudes" icon="pi pi-fw pi-pen-to-square"  rendered="#{userLogged.client}">
+                                <p:menuitem value="Solicitud de Remesa" icon="pi pi-fw pi-clipboard" action="/remittances/request-remittance?faces-redirect=true"/>
+                                <p:menuitem value="Verificar Remesas" icon="pi pi-fw pi-verified" action="/remittances/view-remittances?faces-redirect=true"/>
+                            </p:submenu>
+
+                            <!-- Módulo de Autorización de Remesas -->
+                            <p:submenu label="Autorización" icon="pi pi-fw pi-file-check" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Revisión de Remesas" icon="pi pi-fw pi-file-edit" action="/remittances/authorize-remittance?faces-redirect=true"/>
+                            </p:submenu>
+                            <!-- Acerca de -->
+                            <p:menuitem value="Acerca de..." icon="pi pi-fw pi-info-circle" action="/about/about?faces-redirect=true"/>
+
+                            <!-- Cerrar sesión -->
+                            <p:menuitem value="Cerrar sesion" action="/index?faces-redirect=true"/>
+
+                        </p:menubar>
+                    </h:form>
+                </div>
+
+
+                <!-- Contenido dinámico según la sección seleccionada -->
+                <div id="contentPage"> <!--Inicia el contenido-->
+                    <h4 style="text-align: center; font-size: xx-large; color: var(--amarillo)">Busqueda de Agente</h4>
+                    <h:form id="findForm" style="width: 80%;margin: 5px auto" enctype="multipart/form-data">
+                        <div class="ui-fluid p-formgrid p-grid" style="width: 40%; margin: auto">
+                            <p:growl id="msg" life="3000" showDetail="true" />
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col-12">
+                                    <p:outputLabel value="Identificación" for="id"/>
+                                    <p:inputText id="id" value="#{agent.id}" required="true" valueChangeListener="id"/>
+                                </div>
+                                <h:panelGrid columns="1" cellpadding="10" width="50%" style="text-align: center; margin-left: 25%">
+                                    <p:commandButton id="btnFind"
+                                                     update="id name last tel email birthDate typeAgent tempFileName btnpanel agentPhoto msg"
+                                                     value="Buscar"
+                                                     style="font-size: large; background-color: var(--amarillo); border-color: var(--amarillo)"
+                                                     action="#{agentController.findById(agent.id)}"/>
+                                </h:panelGrid>
+                                <div class="p-field p-col-12">
+                                    <p:outputLabel value="Nombre" for="name"/>
+                                    <p:inputText id="name" value="#{agentController.agent.name}"/>
+                                    <h:message for="name"/>
+                                </div>
+                                <div class="p-field p-col-12">
+                                    <p:outputLabel value="Apellidos" for="last"/>
+                                    <p:inputText id="last" value="#{agentController.agent.lastName}" />
+                                    <h:message for="last"/>
+                                </div>
+
+                                <div class="p-field p-col-12">
+                                    <p:outputLabel value="Teléfono" for="tel"/>
+                                    <p:inputText id="tel" value="#{agentController.agent.phone}"/>
+                                    <h:message for="tel"/>
+
+                                    <div class="p-field p-col-12">
+                                        <p:outputLabel value="Correo" for="email"/>
+                                        <p:inputText id="email" value="#{agentController.agent.email}"/>
+                                        <h:message for="email"/>
+                                    </div>
+
+                                    <div class="p-field p-col-12">
+                                        <p:outputLabel value="Fecha de nacimiento" for="birthDate"/>
+                                        <p:inputText id="birthDate" value="#{agentController.agent.birthDate}">
+                                            <f:convertDateTime pattern="yyyy-MM-dd" type="localDate"/>
+                                        </p:inputText>
+                                        <h:message for="birthDate"/>
+                                    </div>
+
+                                    <div class="p-field p-col-12">
+                                        <p:outputLabel value="Tipo de agente" for="typeAgent"/>
+                                        <p:inputText id="typeAgent" value="#{agentController.agent.typeAgent}" />
+                                        <h:message for="typeAgent"/>
+                                    </div>
+
+                                    <div class="p-field p-col-12">
+                                        <p:panelGrid>
+                                            <p:row>
+                                                <h:graphicImage
+                                                        id="agentPhoto"
+                                                        library="images"
+                                                        name="#{foundAgent.photoName}"
+                                                        style="width:100px; height:100px;" />
+                                            </p:row>
+
+                                        </p:panelGrid>
+                                    </div>
+
+                                </div>
+
+
+
+                                <p:panelGrid id="btnpanel" style="width: 100%">
+                                    <p:row>
+                                        <p:column style="width: 40%;border: none">
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </div>
+                        </div>
+                    </h:form>
+                </div> <!--fin del contenido-->
+
+
+                <!-- Pie de página -->
+                <div id="footerPage" style="text-align: center; margin-top: 20px;">
+                    <hr/>
+                    <p>&copy;2024 Empresa Ficticia de Valores. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</f:view>
+</html>

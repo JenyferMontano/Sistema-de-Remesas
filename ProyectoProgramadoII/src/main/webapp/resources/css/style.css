@@ -1,0 +1,90 @@
+:root{
+    /* Paleta de colores */
+    --verde: #4eec91;
+    --gris: #34495e;
+    --amarillo: #f9bf3b;
+    --gris_claro: #4b6680;
+    --verde_oscuro: #008c31 ;
+    --verde_medio: #1ebc61;
+    --azul_oscuro: #01052d;
+
+    /* Fuente texto*/
+    --fuentePrincipal: 'Bebas Neue', sans-serif;
+}
+
+body {
+    font-family: var(--fuentePrincipal);
+}
+
+h1{
+    font-family: var(--fuentePrincipal);
+}
+
+h3{
+    color: var(--amarillo) !important;
+    border-color: var(--azul_oscuro) !important;
+
+}
+
+h4{
+    color: var(--amarillo) !important;
+}
+
+
+.ui-button{
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 6px;
+    border: 2px solid lightgray;
+    padding: 5px 10px;
+}
+
+.blue-bg{
+    background-color: #0bfed7;
+    color:#fff;
+}
+.blue-bg:hover{
+    background-color: #0301d7;
+    color:#fff;
+}
+
+.ui-g > div{
+    background: var(--gris_claro) !important;
+}
+.ui-menu .ui-menu-list .ui-menu-child{
+    background: var(--verde) !important;
+    font-family: var(--fuentePrincipal) !important;
+
+}
+.ui-menuitem.ui-menuitem-active > .ui-menuitem-link{
+    background: var(--verde_medio) !important;
+    font-family: var(--fuentePrincipal) !important;
+}
+.ui-menuitem .ui-menuitem-link .ui-menuitem-text{
+    font-family: var(--fuentePrincipal) !important;
+}
+hr{
+    border-color: var(--gris_claro);
+}
+
+.ui-panel > div {
+    color: white !important;
+    background: var(--gris) !important ;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+    color: var(--azul_oscuro) !important;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon {
+    color: var(--azul_oscuro) !important;
+}
+.ui-outputlabel-label{
+    font-family: var(--fuentePrincipal) !important;
+    color: var(--amarillo) !important;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s:last-child{
+    color: var(--azul_oscuro) !important;
+}
